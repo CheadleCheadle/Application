@@ -10,34 +10,30 @@ import { toTodoDto } from 'src/shared/mapper';
 
 @Injectable()
 export class TodoService {
-    todos: TodoEntity[] = todos;
-    async getOneTodo(id: string): Promise<TodoDto> {
-        const todo = this.todos.find(todo => todo.id === id);
+  todos: TodoEntity[] = todos;
+  async getOneTodo(id: string): Promise<TodoDto> {
+    const todo = this.todos.find((todo) => todo.id === id);
 
-        if (!todo) {
-            throw new HttpException(`Todo item doesn't exist`, HttpStatus.BAD_REQUEST);
-        }
-
-        return toPromise(toTodoDto(todo));
+    if (!todo) {
+      throw new HttpException(
+        `Todo item doesn't exist`,
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
-    async createTodo(todoDto: TodoCreateDto): Promise<TodoDto> {
-        const { name, description } = todoDto;
+    return toPromise(toTodoDto(todo));
+  }
 
-        const todo: TodoEntity = {
-            id: v4(),
-            name,
-            description,
-        };
+  async createTodo(todoDto: TodoCreateDto): Promise<TodoDto> {
+    const { name, description } = todoDto;
 
-        this.todos.push(todo);
-        return toPromise(toTodoDto(todo));
-    }
+    const todo: TodoEntity = {
+      id: v4(),
+      name,
+      description,
+    };
 
+    this.todos.push(todo);
+    return toPromise(toTodoDto(todo));
+  }
 }
-
-
-
-
-
-
